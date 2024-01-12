@@ -108,8 +108,9 @@ mercedes.brake();
 
 // Class declaration
 class PersonCl {
-  constructor(firstName, birthYear) {
-    this.firstName = firstName;
+  constructor(fullName, birthYear) {
+    this.fullName = fullName; // This becomes a validating setter call
+    // But inside the setter call, we save <fullName> to a separate variable <this._fullName>
     this.birthYear = birthYear;
   }
 
@@ -117,11 +118,35 @@ class PersonCl {
   calcAge() {
     console.log(2037 - this.birthYear);
   }
+
+  get age() {
+    return 2037 - this.birthYear;
+  }
+
+  // The way we invoke this setter will be "jessica.fullName = (...)"
+  // which overlaps with the "this.fullName" from the constructor, causing a stack overflow.
+  // To fix this, we use a naming convention: this._fullName
+  set fullName(name) {
+    // Overlap A
+    console.log(name);
+    if (name.includes(' ')) {
+      this._fullName = name; // Overlap B - A&B causing an infinite recursive call
+    } else {
+      alert(`${name} is not a full name!`);
+    }
+  }
+
+  // Now we need to create a getter.
+  get fullName() {
+    return this._fullName;
+  }
 }
 
-const jessica = new PersonCl('Jessica', 1996);
+const jessica = new PersonCl('Jessica Davis', 1996);
 console.log(jessica);
 jessica.calcAge();
+console.log(`Using getter to calculate age: ${jessica.age}`);
+// jessica.__proto__ will contain both <age> property and <get age> function
 
 console.log(jessica.__proto__ === PersonCl.prototype); //true
 
@@ -130,9 +155,30 @@ PersonCl.prototype.greet = function () {
 };
 jessica.greet();
 
+const walter = new PersonCl('Walter White', 1965);
+
 // NOTES ON CLASSES //
 // 1. Classes are not hoisted (classes can't be used before their declarations)
 // 2. Classes are first-class citizens (classes can be passed into and returned from functions)!!!
 // 3. Any code inside the class are executed in strict mode automatically
 
 /* SETTERS and GETTERS */
+const account = {
+  owner: 'Jonas',
+  movements: [200, 530, 120, 300],
+
+  get latest() {
+    return this.movements.at(-1);
+  },
+
+  set latest(mov) {
+    this.movements.push(mov);
+  },
+};
+
+// When invoking a getter method, we write it as if we're using a property (no call-parenthesis)
+console.log(account.latest);
+
+// Again, instead of "calling" the setter, we assign a value like we're using a property.
+account.latest = 50;
+console.log(account.movements);
