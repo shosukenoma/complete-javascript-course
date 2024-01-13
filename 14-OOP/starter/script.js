@@ -114,6 +114,7 @@ class PersonCl {
     this.birthYear = birthYear;
   }
 
+  // INSTANCE METHODS
   // Methods will be added to PersonCl.prototype property
   calcAge() {
     console.log(2037 - this.birthYear);
@@ -140,6 +141,12 @@ class PersonCl {
   get fullName() {
     return this._fullName;
   }
+
+  // STATIC METHOD
+  static hey() {
+    console.log('Hey');
+  }
+  // invoke with PersonCl.hey()
 }
 
 const jessica = new PersonCl('Jessica Davis', 1996);
@@ -182,3 +189,52 @@ console.log(account.latest);
 // Again, instead of "calling" the setter, we assign a value like we're using a property.
 account.latest = 50;
 console.log(account.movements);
+
+/* STATIC METHODS */
+
+// Creating an array from an array-like object
+Array.from(document.querySelectorAll('h1'));
+
+// // This doesn't work!
+// [1, 2, 3].from(...)
+
+// "from()" is not in Array.prototype
+// rather, it is a method in the constructor of the Array object.
+
+Person.hey = function () {
+  console.log('Hey there!');
+};
+
+Person.hey();
+// jonas.hey(); This won't work, because the Person instances do not inherit hey()
+
+/* OBJECT.CREATE */
+// (Least used method for prototypal inheritance)
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+// steven will be linked to the PersonProto prototype.
+// steven is an empty object, because it doesn't have any property yet.
+
+steven.name = 'Steven';
+steven.birthYear = 2022;
+steven.calcAge();
+
+// Object.create doesn't use a .prototype property.
+// Rather, it directly uses the object literal as the prototype.
+console.log(steven.__proto__);
+console.log(steven.__proto__ === PersonProto);
+
+const sarah = Object.create(PersonProto);
+sarah.init('Sarah', 1987);
+console.log(sarah);
+console.log(sarah.__proto__);
