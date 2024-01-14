@@ -149,6 +149,31 @@ class PersonCl {
   // invoke with PersonCl.hey()
 }
 
+class StudentCl extends PersonCl {
+  constructor(fullName, birthYear, course) {
+    // Super() is the constructor function of the parent class.
+    // Always have to be called first (because it sets the this keyword to this "subclass")
+    super(fullName, birthYear);
+
+    // Any property outside of super() will be set implicitly
+    // this.course = course;
+  }
+
+  introduce() {
+    console.log(`My name is ${this.fullName} and I study ${this.course}.`);
+  }
+
+  calcAge() {
+    console.log(
+      `I'm ${
+        2037 - this.birthYear
+      } years old, but as a student I feel more like ${
+        2037 - this.birthYear + 10
+      }.`
+    );
+  }
+}
+
 const jessica = new PersonCl('Jessica Davis', 1996);
 console.log(jessica);
 jessica.calcAge();
@@ -353,6 +378,8 @@ EV.prototype.chargeBattery = function (chargeTo) {
   this.charge = chargeTo;
 };
 
+// "Method lookup" in the prototype chain
+
 EV.prototype.accelerate = function () {
   this.speed += 20;
   this.charge -= 1;
@@ -373,3 +400,48 @@ console.log('brake', tesla);
 
 tesla.chargeBattery(90);
 console.log(tesla);
+
+/* Inheritance between Classes: ES6 Classes */
+// PersonCl and StudentCl defined above.
+
+/* A huge advantage of Inheritance using ES6
+  is that we don't have to manually set a link between the parent class and the child class
+  (using Object.create() and Student.prototype.constructor = Student)
+
+  All we have to do is add "extends Person" and "super()"
+  I personally prefer this over the constructor function inheritance.
+*/
+
+const martha = new StudentCl('Martha Jones', 2012, 'Computer Science');
+martha.introduce();
+martha.calcAge();
+
+/* Inheritance between Classes: Object.create() */
+
+// const PersonProto = {
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   },
+
+//   init(firstName, birthYear) {
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
+//   },
+// };
+
+// const steven = Object.create(PersonProto);
+
+const StudentProto = Object.create(PersonProto);
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const ray = Object.create(StudentProto);
+ray.init('Ray', 2010, 'Computer Science');
+ray.introduce();
+ray.calcAge();
