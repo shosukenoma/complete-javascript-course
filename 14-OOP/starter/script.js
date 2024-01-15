@@ -448,11 +448,20 @@ ray.calcAge();
 
 /* Another Class Example */
 class Account {
+  // Public fields
+  // (These variables are on instances, so they don't belong to the prototype.)
+  // // locale = navigator.language;
+
+  // Private fields
+  // Properties are actually inaccessible from outside
+  #movements = [];
+  #pin;
+
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this._pin = pin;
-    this._movements = [];
+    this.#pin = pin;
+    // this._movements = [];
     // this.locale = navigator.language;
 
     console.log(`Thanks for opening a new account, ${owner}!`);
@@ -460,11 +469,11 @@ class Account {
 
   // Public Interfaces
   getMovements() {
-    return this._movements;
+    return this.#movements;
   }
 
   deposit(val) {
-    this._movements.push(val);
+    this.#movements.push(val);
   }
 
   withdraw(val) {
@@ -480,6 +489,20 @@ class Account {
       this.deposit(val);
       console.log('Loan approved!');
     }
+  }
+
+  // Private methods
+  // (Hiding implementation details from the outside)
+  // !! No browser supports private methods yet,
+  // so it will be detected as a "private field (property)"
+
+  // #approveLoan(val) {
+  //   return true;
+  // }
+
+  // Static method
+  static helper() {
+    console.log('Help is here!');
   }
 }
 
@@ -513,3 +536,10 @@ console.log(acc1);
 // Convention of "_" is only used to indicate that this should be protected.
 
 acc1.getMovements();
+
+// // This will cause a syntax error
+// // Private field cannot be accessed from outside of class definition.
+// console.log(acc1.#movements);
+// console.log(acc1.#pin)
+
+Account.helper();
