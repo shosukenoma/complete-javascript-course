@@ -474,10 +474,12 @@ class Account {
 
   deposit(val) {
     this.#movements.push(val);
+    return this;
   }
 
   withdraw(val) {
     this.deposit(-val);
+    return this;
   }
 
   _approveLoan(val) {
@@ -489,6 +491,7 @@ class Account {
       this.deposit(val);
       console.log('Loan approved!');
     }
+    return this;
   }
 
   // Private methods
@@ -543,3 +546,8 @@ acc1.getMovements();
 // console.log(acc1.#pin)
 
 Account.helper();
+
+/* CHAINING METHODS */
+acc1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000);
+// "return this" in deposit() will allow for chaining.
+// Without any return statement (returning "undefined"), we can't chain methods.
