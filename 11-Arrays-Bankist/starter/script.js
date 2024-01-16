@@ -387,3 +387,11 @@ const chainCalcAverageHumanAge = function (dogAges) {
   console.log(average);
 };
 chainCalcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+
+const firstWithdrawal = movements.find(mov => mov < 0);
+console.log(movements);
+console.log(firstWithdrawal);
+
+console.log(accounts);
+const account = accounts.find(acc => (acc.owner = 'Jessica Davis'));
+console.log(account);
