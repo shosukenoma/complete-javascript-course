@@ -82,11 +82,26 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
+// MAP method
+const createUsernames = function (accs) {
+  accs.forEach(acc => {
+    acc.username = acc.owner
+      .toLowerCase() // "steven thomas williams"
+      .split(' ') // ["steven", "thomas", "williams"]
+      .map(str => str.charAt(0)) // ["s", "t", "w"]
+      .join(''); // "stw"
+    console.log(acc.username);
+    return acc.username;
+  });
+};
+createUsernames(accounts);
+console.log(accounts);
+
+// REDUCE method
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, cur) => acc + cur, 0);
   labelBalance.textContent = `${balance} EUR`;
 };
-
 calcDisplayBalance(account1.movements);
 
 // Lecture Notes
@@ -272,3 +287,10 @@ const balance = movements.reduce((acc, cur) => acc + cur, 0);
 // let balance2 = 0;
 // for (const mov of movements) balance2 += mov;
 // console.log(balance2);
+
+// REDUCE: Maximum value of array
+const maximum = movements.reduce((acc, mov) => {
+  return Math.max(acc, mov);
+}, movements[0]);
+
+console.log(maximum);
