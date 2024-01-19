@@ -540,3 +540,40 @@ const flatMapOverallBalance = accounts
   .flatMap(acc => acc.movements)
   .reduce((acc, mov) => acc + mov, 0);
 console.log(chainedOverallBalance);
+
+/* SORTING in JavaScript */
+
+// Strings
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort());
+console.log(owners);
+
+// Numbers
+console.log(movements);
+
+// In JavaScript, default Array.sort()
+// uses strings as the sorting method.
+
+// If we return [< 0], Order will be a -> b (-1: Keep Order)
+// If we return [> 0], Order will be b -> a (1 : Reverse Order)
+// The original array is mutated!
+
+// movements.sort((a, b) => {
+//   if (a > b) {
+//     return 1;
+//   } else if (b > a) {
+//     return -1;
+//   }
+// });
+// console.log(movements);
+
+// Simpler version (ascending)
+// If a < b, [a-b] < 0  Negative don't switch
+// If a > b, [a-b] > 0  Positive switch
+
+movements.sort((a, b) => a - b);
+console.log(movements);
+
+// Simpler version (DEscending)
+// If a < b, [b-a] > 0  Positive switch
+// If a > b, [b-a] < 0  Negative don't switch
