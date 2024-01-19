@@ -587,3 +587,18 @@ console.log(movements);
 // Simpler version (DEscending)
 // If a < b, [b-a] > 0  Positive switch
 // If a > b, [b-a] < 0  Negative don't switch
+
+/* More ways of CREATING and FILLING ARRAYS */
+
+const moreArray = [0, 1, 2, 3, 4, 5, 6, 7];
+console.log(new Array(0, 1, 2, 3, 4, 5, 6, 7));
+
+// Creating empty arrays with specified num of elements
+const x = new Array(8); // [Empty * 8]
+console.log(x);
+
+// Fill
+x.fill(1); //[1, 1, 1, 1, 1, 1, 1, 1]
+console.log(x);
+
+x.fill(23, 2, 6); //[1, 1, 23, 23, 23, 23, 1, 1]
