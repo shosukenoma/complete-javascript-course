@@ -183,6 +183,19 @@ btnTransfer.addEventListener('click', function (e) {
   inputTransferAmount.value = inputTransferTo.value = '';
 });
 
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  // Approve if there is any single deposit that amounts to 10% of the requested loan amount.
+  const amount = Number(inputLoanAmount.value);
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // Approve Loan
+    currentAccount.movements.push(amount);
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = '';
+});
+
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
   console.log('Closed');
@@ -477,3 +490,23 @@ console.log(firstWithdrawal);
 console.log(accounts);
 const account = accounts.find(acc => acc.owner === 'Jessica Davis');
 console.log(account);
+
+/* Some and Every methods */
+
+// Equality: .includes()
+console.log(movements.includes(-130)); //true
+
+// Conditional Membership: .some(item => item > 25)
+console.log(movements.some(mov => mov > 2000)); //true
+
+const anyDeposits = movements.some(mov => mov > 0);
+console.log(anyDeposits);
+
+// Conditional: .every(item => item > 10)
+console.log(account4.movements.every(mov => mov > 0)); //true - "Are all movements in account4 deposits?"
+
+// Separate callback function
+const checkDeposits = mov => mov > 0;
+movements.some(checkDeposits);
+movements.every(checkDeposits);
+movements.filter(checkDeposits);
