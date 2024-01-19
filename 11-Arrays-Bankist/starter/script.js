@@ -594,7 +594,7 @@ const moreArray = [0, 1, 2, 3, 4, 5, 6, 7];
 console.log(new Array(0, 1, 2, 3, 4, 5, 6, 7));
 
 // Creating empty arrays with specified num of elements
-const x = new Array(8); // [Empty * 8]
+const x = new Array(8); // [Empty * 8] -> This is just an object with a length property.
 console.log(x);
 
 // Fill
@@ -602,3 +602,24 @@ x.fill(1); //[1, 1, 1, 1, 1, 1, 1, 1]
 console.log(x);
 
 x.fill(23, 2, 6); //[1, 1, 23, 23, 23, 23, 1, 1]
+
+// Array.from(originIterator, mappingFunc) function
+// Cleaner code than new Array(7) + .fill(1)
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
+
+const z = Array.from({ length: 7 }, (cur, i) => i + 1); // < cur -> _ > since we don't use the cur parameter.
+console.log(z); // [1, 2, 3, 4, 5, 6, 7]
+
+document.querySelector('body').addEventListener('click', function (e) {
+  e.preventDefault();
+  // const movementsUI = Array.from(
+  //   document.querySelectorAll('.movements__value')
+  // ).map(el => Number(el.textContent.replace('€', '')));
+
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'), // Origin Iterator
+    el => Number(el.textContent.replace('€', '')) // Mapping Function
+  );
+  console.log(movementsUI);
+});
