@@ -510,3 +510,33 @@ const checkDeposits = mov => mov > 0;
 movements.some(checkDeposits);
 movements.every(checkDeposits);
 movements.filter(checkDeposits);
+
+/* FLAT and FLATMAP */
+const nestedArr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(nestedArr.flat()); // [1, 2, 3, 4, 5, 6, 7, 8]
+// ONLY GOES 1-Level deep by default!
+
+const deeperArr = [[[1, 2], 3], [[4, 5], 6], 7, 8];
+console.log(nestedArr.flat(2));
+
+const accountMovements = accounts.map(acc => acc.movements);
+const allMovements = accountMovements.flat();
+const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance);
+
+const chainedOverallBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(chainedOverallBalance);
+
+// TIP!
+// Using map() on an object attribute (resulting in an array of the attributes)
+// and using flat() is a very commonly used combination of methods.
+
+// FLATMAP: map() and then flat().
+// argument is same as map()
+const flatMapOverallBalance = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(chainedOverallBalance);
