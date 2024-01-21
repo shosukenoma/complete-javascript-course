@@ -80,3 +80,50 @@ document
   .addEventListener('click', function () {
     message.remove();
   });
+
+// Styles
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+
+console.log(message.style.height); // Empty, because it's not an inline style.
+console.log(message.style.width); // '120%'
+
+// This is how to load the CSS style.
+console.log(getComputedStyle(message).height); // Empty, because it's not an inline style.
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+
+// Manipulating CSS Custom Properties
+document.documentElement.style.setProperty('--color-primary', 'orangered');
+
+// Attributes
+const logo = document.querySelector('.nav__logo');
+console.log(logo.alt);
+console.log(logo.src);
+// Setting attributes
+logo.alt = 'Beautiful minimalist logo';
+
+// Retrieving non-standard attributes (e.g. 'designer' attribute in an <img> tag)
+console.log(logo.getAttribute('designer'));
+logo.setAttribute('company', 'Bankist');
+
+console.log(logo.src); // Absolute Path
+console.log(logo.getAttribute('src')); // Relative Path
+
+const link = document.querySelector('.nav__link--btn');
+console.log(link.href);
+console.log(link.getAttribute('href'));
+
+// Data attributes
+// Always stored in the "dataset" object
+console.log(logo.dataset.versionNumber);
+
+// Classes
+logo.classList.add();
+logo.classList.remove();
+logo.classList.toggle();
+logo.classList.contains(); // NOT .includes
+
+// // DONT USE! Overwrites everything and only allows one class.
+// logo.className = 'Jonas'
