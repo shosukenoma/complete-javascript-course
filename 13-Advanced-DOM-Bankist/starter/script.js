@@ -119,11 +119,48 @@ console.log(link.getAttribute('href'));
 // Always stored in the "dataset" object
 console.log(logo.dataset.versionNumber);
 
-// Classes
-logo.classList.add();
-logo.classList.remove();
-logo.classList.toggle();
-logo.classList.contains(); // NOT .includes
+// // Classes
+// logo.classList.add();
+// logo.classList.remove();
+// logo.classList.toggle();
+// logo.classList.contains(); // NOT .includes
 
 // // DONT USE! Overwrites everything and only allows one class.
 // logo.className = 'Jonas'
+
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  // Retrieve the coordinates of section--1
+  const s1coords = section1.getBoundingClientRect();
+  console.log(s1coords);
+  // The values are RELATIVE to the VIEWPORT
+
+  // Scroll Positions
+  console.log('Current scroll (X/Y): ', window.scrollX, window.scrollY);
+
+  // Viewport Height and Width
+  console.log(
+    'Viewport height/width: ',
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+
+  // Scrolling
+  // window.scrollTo(
+  //   window.scrollX + s1coords.left,
+  //   window.scrollY + s1coords.top
+  // );
+  // s1coords.top will only retrieve the value between the viewport top edge and the element,
+  // so we have to add the current scroll position to make it jump to the same place every time.
+
+  // window.scrollTo({
+  //   left: window.scrollX + s1coords.left,
+  //   top: window.scrollY + s1coords.top,
+  //   behavior: 'smooth',
+  // });
+
+  // Only available in latest browsers
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
