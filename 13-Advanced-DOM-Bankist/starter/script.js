@@ -164,3 +164,20 @@ btnScrollTo.addEventListener('click', function (e) {
   // Only available in latest browsers
   section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+const alertH1 = function (e) {
+  console.log('Mouse Entered!');
+};
+
+// We can stack event listeners by add..., add..., add...
+const h1 = document.querySelector('h1');
+h1.addEventListener('mouseenter', alertH1);
+
+// Outdated
+h1.onmouseenter = function (e) {
+  console.log('Mouse Entered!');
+};
+
+// Removing an event handler
+// This line has to be inside some event handler / callback function (cannot be on global scope)
+setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
