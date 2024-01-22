@@ -238,3 +238,31 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 //   }
 //   // , true // set the useCapture parameter to true -> event handler will listen to capture events, instead of bubbling events
 // );
+
+/* DOM Traversing */
+const h1 = document.querySelector('h1');
+
+// Going downwards: child
+console.log(h1.querySelectorAll('.highlight'));
+console.log(h1.childNodes);
+console.log(h1.children);
+
+h1.firstElementChild.style.color = 'white';
+h1.lastElementChild.style.color = 'black';
+
+// Going upwards: parents
+console.log(h1.parentNode);
+console.log(h1.parentElement);
+
+h1.closest('.header').style.background = 'var(--gradient-secondary)';
+
+// Going sideways: siblings
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling);
+
+// To select ALL siblings:
+console.log(h1.parentElement.children); // Going up and back down
+
+[...h1.parentElement.children].forEach(function (el) {
+  if (el !== h1) el.style.transform = 'scale(0.5)';
+});
