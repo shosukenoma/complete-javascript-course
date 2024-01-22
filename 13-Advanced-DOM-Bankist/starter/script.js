@@ -181,3 +181,33 @@ h1.onmouseenter = function (e) {
 // Removing an event handler
 // This line has to be inside some event handler / callback function (cannot be on global scope)
 setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+
+/* Event Propagation */
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
+
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  console.log('LINK', e.target, e.currentTarget); // e.target is the origin of the event (where the click took place)
+  this.style.backgroundColor = randomColor();
+  console.log(e.currentTarget === this); //true
+});
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  console.log('LINKS', e.target, e.currentTarget);
+  this.style.backgroundColor = randomColor();
+
+  // Stop propagation
+  e.stopPropagation(); // Cut off flow of event propagation
+});
+
+document.querySelector('.nav').addEventListener(
+  'click',
+  function (e) {
+    console.log('NAV', e.target, e.currentTarget);
+    this.style.backgroundColor = randomColor();
+  }
+  // , true // set the useCapture parameter to true -> event handler will listen to capture events, instead of bubbling events
+);
