@@ -504,3 +504,22 @@ slider();
 // [...h1.parentElement.children].forEach(function (el) {
 //   if (el !== h1) el.style.transform = 'scale(0.5)';
 // });
+
+// Listens for HTML and JS load
+// Activates once the HTML is parsed
+document.addEventListener('DOMContentLoaded', function (e) {
+  console.log('HTML parsed and DOM tree built!', e);
+});
+
+// Event is fired once everything in the page is done loading
+window.addEventListener('load', function (e) {
+  console.log('Page fully loaded', e);
+});
+
+// // Don't use unless necessary in UX perspective.
+// // Event fires right before the user leaves the page
+// window.addEventListener('beforeunload', function (e) {
+//   e.preventDefault();
+//   console.log(e);
+//   e.returnValue = ''; // This message won't be displayed in most modern browsers.
+// });
