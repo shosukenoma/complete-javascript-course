@@ -5,25 +5,25 @@ const countriesContainer = document.querySelector('.countries');
 
 ///////////////////////////////////////
 
-// const renderCountry = function (data) {
-//   const html = `
-//   <article class="country">
-//     <img class="country__img" src="${data.flags.svg}" />
-//     <div class="country__data">
-//       <h3 class="country__name">${data.name.official}</h3>
-//       <h4 class="country__region">${data.region}</h4>
-//       <p class="country__row"><span>👫</span>${(
-//         data.population / 1000000
-//       ).toFixed(1)} people</p>
-//       <p class="country__row"><span>🗣️</span>${data.languages.por}</p>
-//       <p class="country__row"><span>💰</span>${data.currencies.EUR?.name}</p>
-//     </div>
-//   </article>
-//   `;
+const renderCountry = function (data) {
+  const html = `
+  <article class="country">
+    <img class="country__img" src="${data.flags.svg}" />
+    <div class="country__data">
+      <h3 class="country__name">${data.name.official}</h3>
+      <h4 class="country__region">${data.region}</h4>
+      <p class="country__row"><span>👫</span>${(
+        data.population / 1000000
+      ).toFixed(1)} people</p>
+      <p class="country__row"><span>🗣️</span>${data.languages.por}</p>
+      <p class="country__row"><span>💰</span>${data.currencies.EUR?.name}</p>
+    </div>
+  </article>
+  `;
 
-//   countriesContainer.insertAdjacentHTML('beforeend', html);
-//   countriesContainer.style.opacity = 1;
-// };
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  countriesContainer.style.opacity = 1;
+};
 
 // const getCountryAndNeighbor = function (country) {
 //   const request = new XMLHttpRequest();
@@ -57,7 +57,10 @@ const countriesContainer = document.querySelector('.countries');
 // getCountryAndNeighbor('portugal');
 // // getCountryAndNeighbor('usa');
 
-const request = fetch('https://restcountries.com/v3.1/name/portugal').then(
-  data => console.log(data)
-);
-console.log(request);
+const getCountryData = function (country) {
+  fetch(`https://restcountries.com/v3.1/name/${country}`).then(res => {
+    res.json().then(data => renderCountry(data[0]));
+  });
+};
+
+getCountryData('portugal');
