@@ -58,8 +58,21 @@ const renderCountry = function (data) {
 // // getCountryAndNeighbor('usa');
 
 const getCountryData = function (country) {
-  fetch(`https://restcountries.com/v3.1/name/${country}`).then(res => {
-    res.json().then(data => renderCountry(data[0]));
+  // Country 1
+  fetch(`https://restcountries.com/v3.1/name/${country}`).then(response => {
+    response
+      .json()
+      .then(data => {
+        renderCountry(data[0]);
+        const neighbor = data[0].borders[0];
+
+        if (!neighbor) return;
+
+        // Country 2
+        return fetch(`https://restcountries.com/v3.1/alpha/${neighbor}`);
+      })
+      .then(response => response.json())
+      .then(data => renderCountry(data));
   });
 };
 
